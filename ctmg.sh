@@ -78,11 +78,12 @@ initialize_container() {
 cmd_usage() {
 	cat <<-_EOF
 	Usage: $PROGRAM [ new | delete | open | close | list ] [arguments...]
-	  $PROGRAM new    container_path      container_size[units_suffix]
-	  $PROGRAM resize container_path plus_container_size[units_suffix]
-	  $PROGRAM delete container_path
-	  $PROGRAM open   container_path
-	  $PROGRAM close  container_path
+	  $PROGRAM new      container_path      container_size[units_suffix]
+	  $PROGRAM resize   container_path plus_container_size[units_suffix]
+	  $PROGRAM delete   container_path
+	  $PROGRAM rwopen   container_path
+	  $PROGRAM open     container_path
+	  $PROGRAM close    container_path
 	  $PROGRAM list
 	_EOF
 }
@@ -118,11 +119,12 @@ cmd_resize() {
 }
 
 cmd_open() {
-	[[ $# -ne 1 ]] && die "Usage: $PROGRAM open container_path"
+	[[ $# -ne 2 ]] && die "Usage: $PROGRAM open container_path"
+	[[ $2 == "RO" ]] && local flag="--readonly" ;
 	initialize_container "$1"
 	[[ -f $container_path ]] || { keep_open=1; die "$container_path does not exist or is not a regular file"; }
 	[[ -e $mapper_path ]] && { keep_open=1; die "$container_path is already open"; }
-	trace cryptsetup luksOpen "$container_path" "$mapper_name" || die "Could not open LUKS volume at $container_path"
+	trace cryptsetup luksOpen $flag "$container_path" "$mapper_name" || die "Could not open LUKS volume at $container_path"
 	trace mkdir -p "$mount_path" || die "Could not create $mount_path directory"
 	trace mount "$mapper_path" "$mount_path" || die "Could not mount $container_path to $mount_path"
 	keep_open=1
@@ -182,7 +184,8 @@ case "$1" in
 	d|del|delete) shift;		cmd_delete "$@" ;;
 	c|close) shift;			cmd_close "$@" ;;
 	l|list) shift;			cmd_list "$@" ;;
-	o|open) shift;			cmd_open "$@" ;;
+	o|open) shift;			cmd_open "$@" "RO" ;;
+	w|rwopen) shift;			cmd_open "$@" "RW" ;;
 	r|resize) shift;			cmd_resize "$@" ;;
 	*)				cmd_auto "$@" ;;
 esac
