@@ -78,7 +78,8 @@ initialize_container() {
 cmd_usage() {
 	cat <<-_EOF
 	Usage: $PROGRAM [ new | delete | open | close | list ] [arguments...]
-	  $PROGRAM new    container_path container_size[units_suffix]
+	  $PROGRAM new    container_path      container_size[units_suffix]
+	  $PROGRAM resize container_path plus_container_size[units_suffix]
 	  $PROGRAM delete container_path
 	  $PROGRAM open   container_path
 	  $PROGRAM close  container_path
@@ -99,6 +100,21 @@ cmd_new() {
 	trace cryptsetup luksOpen "$container_path" "$mapper_name" || { trace rm -f "$container_path"; die "Could not open LUKS volume at $container_path"; }
 	trace mkfs.ext4 -q -E root_owner="${SUDO_UID:-$(id -u)}:${SUDO_GID:-$(id -g)}" "$mapper_path" || { trace rm -f "$container_path"; die "Could not format ext4 on the LUKS volume at $container_path"; }
 	echo "[+] Created new encrypted container at $container_path"
+}
+
+cmd_resize() {
+	[[ $# -ne 2 ]] && die "Usage: $PROGRAM resize container_path plus_container_size[units_suffix]"
+	initialize_container "$1"
+	local container_size="$2"
+	[[ -e $mapper_path ]] && { keep_open=1; die "$container_path is already open"; }
+	[[ -e $container_path ]] || { die "$container_path not found. Aborting."; }
+	trace truncate -s +"$container_size" "$container_path" || { die "Could not resize container file $container_path"; }
+	trace cryptsetup luksOpen "$container_path" "$mapper_name" || { die "Could not open LUKS volume at $container_path"; }
+	e2fsck -f /dev/mapper/"$mapper_name" || { die "Could not check filesystem for errors at /dev/mapper/$mapper_name"; }
+	trace cryptsetup resize "$mapper_name"  || { die "Could not resize LUKS volume on $mapper_name"; }
+	trace resize2fs "$mapper_path" || { die "Could not reisze Volume at $container_path";}
+	echo "[+] Resized encrypted container $container_path"
+	cmd_close "$1"
 }
 
 cmd_open() {
@@ -167,6 +183,7 @@ case "$1" in
 	c|close) shift;			cmd_close "$@" ;;
 	l|list) shift;			cmd_list "$@" ;;
 	o|open) shift;			cmd_open "$@" ;;
+	r|resize) shift;			cmd_resize "$@" ;;
 	*)				cmd_auto "$@" ;;
 esac
 exit 0
