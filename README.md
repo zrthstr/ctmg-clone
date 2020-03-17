@@ -68,10 +68,10 @@ Or, use the package from your distribution:
 
 ### Bug reports
 
-All bugs in this repo are most likely from the extra resize and read-write mode additions not from zx's original ctmg.
-Report any bugs about the READ WRITE or RESIZE to me via github issue or pr?
+All bugs in this repo are most likely from ctmg-clone not from ctmg - from adding the `resize` and `read/write` mode.
+Report any bugs about the `read/write` or `resize` here via github issue or PR.
 
-The original readme says: Report any bugs to <jason@zx2c4.com>
+The original Authors readme says: Report any bugs to <jason@zx2c4.com>
 
 ### Security Considerations
 
