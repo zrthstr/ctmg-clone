@@ -1,4 +1,4 @@
-## ctmg-clone of https://git.zx2c4.com/ctmg
+## ctmg-clone
 
 `ctmg` clone with two added features:
 * container `resize` function
