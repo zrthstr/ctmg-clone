@@ -1,4 +1,4 @@
-## ctmg
+## ctmg-clone
 
 `ctmg` clone with added container `resiz`e & `read-only/read-write` functionality
 
