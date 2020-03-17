@@ -1,17 +1,20 @@
 ## ctmg
 
-ctmg cone with added resize functionality
+`ctmg` clone with added container `resiz`e & `read-only/read-write` functionality https://git.zx2c4.com/ctmg/about/
 
 `ctmg` is an encrypted container manager for Linux using `cryptsetup` and various standard file system utilities. Containers have the extension `.ct` and are mounted at a directory of the same name, but without the extension. Very simple to understand, and very simple to implement; `ctmg` is a simple bash script.
+
+About: https://git.zx2c4.com/ctmg/about/
 
 ### Usage
 
     Usage: ctmg [ new | delete | open | close | list ] [arguments...]
-      ctmg new    container_path      container_size[units_suffix]
-      ctmg resize container_path plus_container_size[units_suffix]
-      ctmg delete container_path
-      ctmg open   container_path
-      ctmg close  container_path
+      ctmg new     container_path        container_size[units_suffix]
+      ctmg resize  container_path   plus_container_size[units_suffix]
+      ctmg delete  container_path
+      ctmg open    container_path                       # read-only
+      ctmg rwopen  container_path                       # read-write
+      ctmg close   container_path
       ctmg list
 
 Calling `ctmg` with no arguments will call `list` if there are any containers open, and otherwise show the usage screen. Calling `ctmg` with a filename argument will call `open` if it is not already open and otherwise will call `close`.
@@ -34,6 +37,8 @@ Calling `ctmg` with no arguments will call `list` if there are any containers op
 #### Open a container, add a file, and then close it
 
     zx2c4@thinkpad ~ $ ctmg open example
+    [#] # or
+    zx2c4@thinkpad ~ $ ctmg rwopen example
     [#] cryptsetup luksOpen /home/zx2c4/example.ct ct_example
     Enter passphrase for /home/zx2c4/example.ct:
     [#] mkdir -p /home/zx2c4/example
@@ -63,7 +68,10 @@ Or, use the package from your distribution:
 
 ### Bug reports
 
-Report any bugs to <jason@zx2c4.com>.
+All bugs in this repo are most likely from the extra resize and read-write mode additions not from zx's original ctmg.
+Report any bugs about the READ WRITE or RESIZE to me via github issue or pr?
+
+The original readme says: Report any bugs to <jason@zx2c4.com>
 
 ### Security Considerations
 
