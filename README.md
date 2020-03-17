@@ -1,11 +1,14 @@
 ## ctmg
 
+ctmg cone with added resize functionality
+
 `ctmg` is an encrypted container manager for Linux using `cryptsetup` and various standard file system utilities. Containers have the extension `.ct` and are mounted at a directory of the same name, but without the extension. Very simple to understand, and very simple to implement; `ctmg` is a simple bash script.
 
 ### Usage
 
     Usage: ctmg [ new | delete | open | close | list ] [arguments...]
-      ctmg new    container_path container_size[units_suffix]
+      ctmg new    container_path      container_size[units_suffix]
+      ctmg resize container_path plus_container_size[units_suffix]
       ctmg delete container_path
       ctmg open   container_path
       ctmg close  container_path
@@ -42,6 +45,11 @@ Calling `ctmg` with no arguments will call `list` if there are any containers op
     [#] cryptsetup luksClose ct_example
     [#] rmdir /home/zx2c4/example
     [+] Closed /home/zx2c4/example.ct
+
+#### Resize a container by 100MiB
+
+    zrth@bar ~ $ ctmg resize example 100MiB
+    ...
 
 ### Installation
 
