@@ -53,26 +53,26 @@ Calling `ctmg` with no arguments will call `list` if there are any containers op
 
 #### Resize a container by 100MiB
 
-    zrth@fbb ~/test/ctmg-clone (git)-[master] % ./ctmg.sh resize  e3 654MiB
-    [#] truncate -s +654MiB /home/zrth/test/ctmg-clone/e3.ct
-    [#] cryptsetup luksOpen /home/zrth/test/ctmg-clone/e3.ct ct_home-zrth-test-ctmg-clone-e3
-    Enter passphrase for /home/zrth/test/ctmg-clone/e3.ct:
+    foo@thinkpad ~/test/ctmg-clone (git)-[master] % ./ctmg.sh resize  e3 654MiB
+    [#] truncate -s +654MiB /home/foo/test/ctmg-clone/e3.ct
+    [#] cryptsetup luksOpen /home/foo/test/ctmg-clone/e3.ct ct_home-foo-test-ctmg-clone-e3
+    Enter passphrase for /home/foo/test/ctmg-clone/e3.ct:
     [+] e2fsck 1.45.5 (07-Jan-2020)
     [+] Pass 1: Checking inodes, blocks, and sizes
     [+] Pass 2: Checking directory structure
     [+] Pass 3: Checking directory connectivity
     [+] Pass 4: Checking reference counts
     [+] Pass 5: Checking group summary information
-    [+] /dev/mapper/ct_home-zrth-test-ctmg-clone-e3: 11/27216 files (0.0% non-contiguous), 9089/108544 blocks
-    [#] cryptsetup resize ct_home-zrth-test-ctmg-clone-e3
-    Enter passphrase for /home/zrth/test/ctmg-clone/e3.ct:
-    [#] resize2fs /dev/mapper/ct_home-zrth-test-ctmg-clone-e3
+    [+] /dev/mapper/ct_home-foo-test-ctmg-clone-e3: 11/27216 files (0.0% non-contiguous), 9089/108544 blocks
+    [#] cryptsetup resize ct_home-foo-test-ctmg-clone-e3
+    Enter passphrase for /home/foo/test/ctmg-clone/e3.ct:
+    [#] resize2fs /dev/mapper/ct_home-foo-test-ctmg-clone-e3
     [+] resize2fs 1.45.5 (07-Jan-2020)
     [+] Resizing the filesystem on /dev/mapper/ct_home-zrth-test-ctmg-clone-e3 to 778240 (1k) blocks.
-    [+] The filesystem on /dev/mapper/ct_home-zrth-test-ctmg-clone-e3 is now 778240 (1k) blocks long.
-    [+] Resized encrypted container /home/zrth/test/ctmg-clone/e3.ct
-    [#] cryptsetup luksClose ct_home-zrth-test-ctmg-clone-e3
-    [+] Closed /home/zrth/test/ctmg-clone/e3.ct
+    [+] The filesystem on /dev/mapper/ct_home-foo-test-ctmg-clone-e3 is now 778240 (1k) blocks long.
+    [+] Resized encrypted container /home/foo/test/ctmg-clone/e3.ct
+    [#] cryptsetup luksClose ct_home-foo-test-ctmg-clone-e3
+    [+] Closed /home/foo/test/ctmg-clone/e3.ct
 
 ### Installation
 
