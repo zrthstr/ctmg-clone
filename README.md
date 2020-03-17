@@ -51,7 +51,7 @@ Calling `ctmg` with no arguments will call `list` if there are any containers op
     [#] rmdir /home/zx2c4/example
     [+] Closed /home/zx2c4/example.ct
 
-#### Resize a container by 100MiB
+#### Resize a container by 654MiB
 
     foo@thinkpad ~/test/ctmg-clone (git)-[master] % ./ctmg.sh resize  e3 654MiB
     [#] truncate -s +654MiB /home/foo/test/ctmg-clone/e3.ct
