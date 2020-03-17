@@ -1,6 +1,6 @@
 ## ctmg-clone
 
-`ctmg` clone with added container `resiz`e & `read-only/read-write` functionality
+`ctmg` clone with added container `resize` & `read-only/read-write` functionality
 
 `ctmg` is an encrypted container manager for Linux using `cryptsetup` and various standard file system utilities. Containers have the extension `.ct` and are mounted at a directory of the same name, but without the extension. Very simple to understand, and very simple to implement; `ctmg` is a simple bash script.
 
