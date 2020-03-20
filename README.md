@@ -1,4 +1,4 @@
-## ctmg-clone
+## ctmg-clone - Simple wrapper around cryptsetup for encrypted containers
 
 `ctmg` clone with two added features:
 * container `resize` function
